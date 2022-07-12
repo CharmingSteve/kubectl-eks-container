@@ -9,8 +9,8 @@ Using this file builds a container that will allow you to run kubectl of your fa
 MIT License - Use at your own risk
 
 Here is the gist of how to use this 
-# docker build -t charmingsteve/kubectleks:1.21_v_02 -f Dockerfile-kubectl-awscli .
+$ docker build -t charmingsteve/kubectleks:1.21_v_02 -f Dockerfile-kubectl-awscli .
 
-# docker run  -it  --rm  -v /home/steve/.kube-eks:/root/.kube -v /home/steve/.aws:/root/.aws  charmingsteve/kubectleks:1.21_v_02 -c "aws eks update-kubeconfig --region us-east-2 --name eks-autoscaling"
+$ docker run  -it  --rm  -v /home/steve/.kube-eks:/root/.kube -v /home/steve/.aws:/root/.aws  charmingsteve/kubectleks:1.21_v_02 -c "aws eks update-kubeconfig --region us-east-2 --name eks-autoscaling"
 
-# docker run  -it  --rm  -v /home/steve/.kube-eks:/root/.kube -v /home/steve/.aws:/root/.aws  charmingsteve/kubectleks:1.21_v_02 -c "kubectl get svc"
+$ docker run  -it  --rm  -v /home/steve/.kube-eks:/root/.kube -v /home/steve/.aws:/root/.aws  charmingsteve/kubectleks:1.21_v_02 -c "kubectl get svc"
