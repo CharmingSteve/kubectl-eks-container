@@ -32,47 +32,12 @@ RUN chmod +x /usr/bin/aws-iam-authenticator
 ENTRYPOINT ["/bin/sh"]
 
 
-
-#!!! ADD EKSCTL 
-
-# Using this file builds a container that will allow you to run kubectl of your favorite version, just change the first line to represent the version you want. Take the tag from Docker Hub  bitnami/kubectl.
+# Using this file builds a container that will allow you to run kubectl of your favorite version, just change the first line to represent the version you want. 
 
 # MIT License - Use at your own risk
 
 # docker build -t charmingsteve/kubectleks:1.21_v_02 -f Dockerfile-kubectl-awscli .
 
-# docker run -it  --rm --name kubectl -v /home/steve/.kube-souel/config:/root/.kube/config -t /home/steve/.aws:/root/.aws 
+# docker run  -it  --rm  -v /home/steve/.kube-eks:/root/.kube -v /home/steve/.aws:/root/.aws  charmingsteve/kubectleks:1.21_v_02 -c "aws eks update-kubeconfig --region us-east-2 --name eks-autoscaling"
 
-
-
-# FROM alpine 
-
-
-
-# Based upon https://github.com/aws/aws-cli/blob/2.0.10/docker/Dockerfile
-
-
-
-# https://www.jeffgeerling.com/blog/2018/install-kubectl-your-docker-image-easy-way
-# https://hub.docker.com/r/lachlanevenson/k8s-kubectl
-# docker run -it  --rm -u root  --name kubectl -v /home/steve/.kube-souel/config:/.kube/config --entrypoint bash  bitnami/kubectl:1.21.14-debian-11-r1
-
-# root@1905071de536:/# echo $PATH
-# /opt/bitnami/kubectl/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
-
-#RUN ln -s /usr/local/aws-cli/v2/current/bin/aws /usr/local/bin/aws && \
-#   ln -s /usr/local/aws-cli/v2/current/bin/aws_completer /usr/local/bin/aws_completer
-
-
-#
-## Install AWS cli and iam authenticator
-#RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-#RUN unzip awscliv2.zip
-#RUN ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
-
-
-
-#WORKDIR /root
-#ENTRYPOINT ["kubectl"]
-#CMD ["help"]
+# docker run  -it  --rm  -v /home/steve/.kube-eks:/root/.kube -v /home/steve/.aws:/root/.aws  charmingsteve/kubectleks:1.21_v_02 -c "kubectl get svc"
