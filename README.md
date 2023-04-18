@@ -1,6 +1,8 @@
 # kubectl-eks-container
 Dockerfile for building kubectl with awscli to work with EKS
 
+Also has python3 and kubernetes plugin as well as boto3
+
 I use Windows WSL with kubernetes locally, which uses the latest Kubernetes dev stack .I stopped wasting resources with hyper-v and other emulations.  When I needed to manage an EKS cluster from the same WSL I was informed that the versions conflict. "
 error: exec plugin: invalid apiVersion "client.authentication.k8s.io/v1alpha1"
 

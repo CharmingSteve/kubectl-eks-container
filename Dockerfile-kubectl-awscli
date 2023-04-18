@@ -20,17 +20,18 @@ COPY --from=installer /aws-cli-bin/ /usr/local/bin/
 COPY --from=installer /tmp/eksctl /usr/local/bin/
 
 RUN yum update -y \
-  && yum install -y less vim curl \
+  && yum install -y less vim curl python3 pip3 \
   && yum clean all
 RUN export ARCH="$(uname -m)" && if [[ ${ARCH} == "x86_64" ]]; then export ARCH="amd64"; elif [[ ${ARCH} == "aarch64" ]]; then export ARCH="arm64"; fi && curl -L https://dl.k8s.io/release/${KUBE_LATEST_VERSION}/bin/linux/${ARCH}/kubectl -o /usr/local/bin/kubectl \
  && chmod +x /usr/local/bin/kubectl
+RUN pip3 install kubernetes boto3
 
 # IAM authenticator is required so that kukbectl can see what you are allowed by IAM rules to deal with kubernetes
 RUN curl -o /usr/bin/aws-iam-authenticator https://s3.us-west-2.amazonaws.com/amazon-eks/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator
 RUN chmod +x /usr/bin/aws-iam-authenticator
 
-ENTRYPOINT ["/bin/sh"]
 
+ENTRYPOINT ["sh", "-c", "while true; do sleep 3600; done"]
 
 # Using this file builds a container that will allow you to run kubectl of your favorite version, just change the first line to represent the version you want. 
 
@@ -38,6 +39,6 @@ ENTRYPOINT ["/bin/sh"]
 
 # docker build -t charmingsteve/kubectleks:1.21_v_02 -f Dockerfile-kubectl-awscli .
 
-# docker run  -it  --rm  -v /home/steve/.kube-eks:/root/.kube -v /home/steve/.aws:/root/.aws  charmingsteve/kubectleks:1.21_v_02 -c "aws eks update-kubeconfig --region us-east-2 --name eks-autoscaling"
+# docker run  d --rm  -v /home/steve/.kube-eks:/root/.kube -v /home/steve/.aws:/root/.aws  charmingsteve/kubectleks:1.21_v_02 -c "aws eks update-kubeconfig --region us-east-2 --name eks-autoscaling"
 
-# docker run  -it  --rm  -v /home/steve/.kube-eks:/root/.kube -v /home/steve/.aws:/root/.aws  charmingsteve/kubectleks:1.21_v_02 -c "kubectl get svc"
+# docker run  -d  --rm  -v /home/steve/.kube-eks:/root/.kube -v /home/steve/.aws:/root/.aws  charmingsteve/kubectleks:1.21_v_02 -c "kubectl get svc"
